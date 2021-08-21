@@ -1,0 +1,26 @@
+{
+  "name": "trgbot",
+  "version": "1.0.0",
+  "description": "Just a discord bot for trg",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ryentes/trgbot.git"
+  },
+  "author": "rdy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ryentes/trgbot/issues"
+  },
+  "homepage": "https://github.com/ryentes/trgbot#readme",
+  "dependencies": {
+    "discord.js": "^13.1.0"
+  },
+  "devDependencies": {
+    "es": "^0.8.0",
+    "lint": "^0.7.0"
+  }
+}
