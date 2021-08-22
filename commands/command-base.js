@@ -65,6 +65,8 @@ module.exports = (client, commandOptions) => {
         commands = [commands]
     }
 
+    console.log(`Registering commands "${commands[0]}"`)
+
     // Ensure the permissions are valid and in an array
     if(permissions.length) {
         if(typeof permissions === "string") {
@@ -79,30 +81,45 @@ module.exports = (client, commandOptions) => {
         const { member, content, guild } = message
 
         for(const alias of commands) {
-            if(content.toLowerCase().startsWith(`${prefix}${alias.toLowerCase()}`))
-            // A command has been issued
+            if(content.toLowerCase().startsWith(`${prefix}${alias.toLowerCase()}`)) {
+                // A command has been issued
+                console.log('I see a command')
             
-            // Ensure the user has the req'd permissions
-            for(const permission of permissions){
-                if(!member.hasPermission(permission)) {
-                    message.reply(permissionError)
-                    return
+                // Ensure the user has the req'd permissions
+                for(const permission of permissions){
+                    if(!member.hasPermission(permission)) {
+                        message.reply(permissionError)
+                        return
+                    }
                 }
-            }
 
-            // Ensure the user has the req'd roles
-            for(const requiredRole of requiredRoles){
-                const role = guild.roles.cache.find(role =>
-                    role.name === requiredRole)
+                // Ensure the user has the req'd roles
+                for(const requiredRole of requiredRoles){
+                    const role = guild.roles.cache.find(role =>
+                        role.name === requiredRole)
                 
-                if(!role || !member.roles.cache.has(role.id)) {
-                    message.reply(`You must have the "${requiredRole}" role to use this command`)
+                    if(!role || !member.roles.cache.has(role.id)) {
+                        message.reply(`You must have the "${requiredRole}" role to use this command`)
+                        return
+                    }
+                }   
+
+                // Split on any number of arguments
+                const arguments = content.split(/[ ]+/)
+
+                // remove the commmand which is first index
+                arguments.shift()
+            
+                // Ensure there is the correct number of arguments
+                if(arguments.length < minArgs || (maxArgs !== null && arguments.length > maxArgs)) {
+                    message.reply(`Incorrect syntax! Use ${prefix}${alias} ${expectedArgs}`)
                     return
                 }
+
+                // handle the custom command code
+                callback(message, arguments, arguments.join(' '))
+                return
             }
-
-
-            return
         }
     })
 }

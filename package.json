@@ -22,5 +22,6 @@
   "devDependencies": {
     "es": "^0.8.0",
     "lint": "^0.7.0"
-  }
+  },
+  "keywords": []
 }

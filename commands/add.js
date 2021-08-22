@@ -8,7 +8,7 @@ module.exports = {
     maxArgs: 2,
     callback: (message, arguments, text) => {
         // some code here
-        console.log(`the answer is +${arguments[0]}+${arguments[1]}`)
+        console.log(`${arguments[0]} ${arguments[1]}`)
     },
     permissions: [],
     requiredRoles: ['TRG Member']
